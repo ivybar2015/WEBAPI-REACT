@@ -11,6 +11,7 @@ using System.Web.Http.Description;
 using CRUDAPP.Models;
 using System.Web.Http.Cors;
 using CRUDAPP.Forms;
+using CRUDAPP.Results;
 
 namespace CRUDAPP.Controllers
 {
@@ -25,6 +26,7 @@ namespace CRUDAPP.Controllers
 
         //////////  ALL ACTION METHODS   ////////////////////
 
+        // get all the table records
         [HttpGet]
         [Route("getallUsers")]
         public object GetAllUsers()
@@ -45,7 +47,6 @@ namespace CRUDAPP.Controllers
             }
         }
 
-        ////////////////////////////////////////////////////////
 
         // Add more record to the database table
         [HttpPost]
@@ -73,40 +74,33 @@ namespace CRUDAPP.Controllers
 
             }
         }
+        ////////////////////////////////////////////////////////
+        //Searching user from table
+        [HttpGet]
+        [Route("searchingUser/{lastName}")]
+        public object SearchUser(string lastName)
+        {
+           
+            try
+            {
+                var searchingLatName = db.UserRecords.Where(col => col.LastName.Contains(lastName) || col.FirstName.Contains(lastName)).ToList();
+                var result = from m in searchingLatName
+                             select new ResultReturn()
+                             {
+                                 Id = m.Id,
+                                 LastName = m.LastName,
+                                 FirstName = m.FirstName
+                             };
+                return new { db = result };
+
+            }
+            catch (Exception e)
+            {
+                return new { message = e.InnerException };
+            }
+        }
 
         ////////////////////////////////////////////////////////
-
-        // POST: api/UserRecords
-        [ResponseType(typeof(UserRecord))]
-        public IHttpActionResult PostUserRecord(UserRecord userRecord)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.UserRecords.Add(userRecord);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = userRecord.Id }, userRecord);
-        }
-
-        // DELETE: api/UserRecords/5
-        [ResponseType(typeof(UserRecord))]
-        public IHttpActionResult DeleteUserRecord(int id)
-        {
-            UserRecord userRecord = db.UserRecords.Find(id);
-            if (userRecord == null)
-            {
-                return NotFound();
-            }
-
-            db.UserRecords.Remove(userRecord);
-            db.SaveChanges();
-
-            return Ok(userRecord);
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
