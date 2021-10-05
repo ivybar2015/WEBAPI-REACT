@@ -10,13 +10,14 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using CRUDAPP.Models;
 using System.Web.Http.Cors;
+using CRUDAPP.Forms;
 
 namespace CRUDAPP.Controllers
 {
     // ADD THIS FOR ALL APP CAN ACCESS IT
     [EnableCors(origins: "*", headers: "*", methods: "*")]
 
-    // RoutePrefix for all inside of UsersController class
+    // RoutePrefix for all inside of UserRecordsController class
     [RoutePrefix("api/user")]
     public class UserRecordsController : ApiController
     {
@@ -25,69 +26,55 @@ namespace CRUDAPP.Controllers
         //////////  ALL ACTION METHODS   ////////////////////
 
         [HttpGet]
-        [Route("getallusers")]
-        public object GetAllUser()
+        [Route("getallUsers")]
+        public object GetAllUsers()
         {
+            var getRocord = db.UserRecords.Where(col => col.IsActive == true).ToList();
             try
             {
-                var getRecords = db.UserRecords.Where(col => col.IsActive == true).ToList();
-                if (getRecords == null)
+                if (getRocord == null)
                 {
-                    // No Match
-                    return new { status = "401", message = "cannot get all user" };
+                    return new { message = "There is empty lists" };
                 }
                 else
-                {
-                    return new { db = getRecords };
-                    // User is authenticated                    
-                }
-
+                    return new { db = getRocord };
             }
             catch (Exception e)
             {
-                return new { status = "401", message = "Server Error " + e.InnerException };
-
+                return new { message = e.InnerException};
             }
         }
 
- 
-       
-        /// /////////////////////////////////////////////////////
-        
-        // PUT: api/UserRecords/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutUserRecord(int id, UserRecord userRecord)
+        ////////////////////////////////////////////////////////
+
+        // Add more record to the database table
+        [HttpPost]
+        [Route("AddNewUser")]
+        public object AddUserRecord(AddUser addUser)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            try { 
+            // create a new OBJECT to store new user information
+            UserRecord objectRecordtable = new UserRecord();
+                objectRecordtable.LastName = addUser.LastName;
+                objectRecordtable.FirstName = addUser.FirstName;
+                objectRecordtable.Address= addUser.FirstName;
+                objectRecordtable.Age = addUser.Age;
+                objectRecordtable.height = addUser.height;
+                objectRecordtable.IsActive = true;
 
-            if (id != userRecord.Id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(userRecord).State = EntityState.Modified;
-
-            try
-            {
+                // add record to table database
+                db.UserRecords.Add(objectRecordtable);
                 db.SaveChanges();
+                return new {db = objectRecordtable };
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception e)
             {
-                if (!UserRecordExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                return new { status = 404, msg = "Error" + e.InnerException };
 
-            return StatusCode(HttpStatusCode.NoContent);
+            }
         }
+
+        ////////////////////////////////////////////////////////
 
         // POST: api/UserRecords
         [ResponseType(typeof(UserRecord))]

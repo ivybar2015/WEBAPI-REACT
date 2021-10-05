@@ -481,8 +481,5 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
-        <member name="M:CRUDAPP.Controllers.UserRecordsController.PutUserRecord(System.Int32,CRUDAPP.Models.UserRecord)">
-            /////////////////////////////////////////////////////
-        </member>
     </members>
 </doc>
