@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="UserDatabaseModelStoreContainer" CdmEntityContainer="UserDatabaseEntities">
+    <EntitySetMapping Name="UserBuyRecords">
+      <EntityTypeMapping TypeName="UserDatabaseModel.UserBuyRecord">
+        <MappingFragment StoreEntitySet="UserBuyRecord">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+          <ScalarProperty Name="Color" ColumnName="Color" />
+          <ScalarProperty Name="NumberItem" ColumnName="NumberItem" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserInfors">
+      <EntityTypeMapping TypeName="UserDatabaseModel.UserInfor">
+        <MappingFragment StoreEntitySet="UserInfor">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="ColorIId" ColumnName="ColorIId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserRecords">
+      <EntityTypeMapping TypeName="UserDatabaseModel.UserRecord">
+        <MappingFragment StoreEntitySet="UserRecord">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="height" ColumnName="height" />
+          <ScalarProperty Name="Age" ColumnName="Age" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

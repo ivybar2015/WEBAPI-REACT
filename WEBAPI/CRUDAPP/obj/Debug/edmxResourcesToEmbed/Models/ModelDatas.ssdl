@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="UserDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="UserBuyRecord">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ItemName" Type="varchar" MaxLength="50" />
+    <Property Name="Color" Type="varchar" MaxLength="50" />
+    <Property Name="NumberItem" Type="int" />
+  </EntityType>
+  <EntityType Name="UserInfor">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="varchar(max)" Nullable="false" />
+    <Property Name="Email" Type="varchar(max)" />
+    <Property Name="ColorIId" Type="int" />
+  </EntityType>
+  <EntityType Name="UserRecord">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" />
+    <Property Name="Address" Type="varchar" MaxLength="250" />
+    <Property Name="Age" Type="int" />
+    <Property Name="height" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityContainer Name="UserDatabaseModelStoreContainer">
+    <EntitySet Name="UserBuyRecord" EntityType="Self.UserBuyRecord" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserInfor" EntityType="Self.UserInfor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserRecord" EntityType="Self.UserRecord" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>
